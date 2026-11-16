@@ -1,0 +1,72 @@
+campo,original,traducao,ordem,grupo
+genero,M,Masculino,1,
+genero,F,Feminino,2,
+regiao,East Anglian Region,Leste da Inglaterra,1,
+regiao,East Midlands Region,Midlands Orientais,2,
+regiao,Ireland,Irlanda,3,
+regiao,London Region,Londres,4,
+regiao,North Region,Norte da Inglaterra,5,
+regiao,North Western Region,Noroeste da Inglaterra,6,
+regiao,Scotland,Escócia,7,
+regiao,South East Region,Sudeste da Inglaterra,8,
+regiao,South Region,Sul da Inglaterra,9,
+regiao,South West Region,Sudoeste da Inglaterra,10,
+regiao,Wales,País de Gales,11,
+regiao,West Midlands Region,Midlands Ocidentais,12,
+regiao,Yorkshire Region,Yorkshire,13,
+escolaridade,No Formal quals,Sem certificação formal,1,
+escolaridade,Lower Than A Level,Ensino médio incompleto,2,
+escolaridade,A Level or Equivalent,Ensino médio completo,3,
+escolaridade,HE Qualification,Ensino superior,4,
+escolaridade,Post Graduate Qualification,Pós-graduação,5,
+faixa_etaria,0-35,Até 35 anos,1,
+faixa_etaria,35-55,De 35 a 55 anos,2,
+faixa_etaria,55<=,55 anos ou mais,3,
+faixa_privacao,0-10%,0 a 10% (mais vulnerável),1,
+faixa_privacao,10-20%,10 a 20%,2,
+faixa_privacao,20-30%,20 a 30%,3,
+faixa_privacao,30-40%,30 a 40%,4,
+faixa_privacao,40-50%,40 a 50%,5,
+faixa_privacao,50-60%,50 a 60%,6,
+faixa_privacao,60-70%,60 a 70%,7,
+faixa_privacao,70-80%,70 a 80%,8,
+faixa_privacao,80-90%,80 a 90%,9,
+faixa_privacao,90-100%,90 a 100% (menos vulnerável),10,
+deficiencia,Y,Sim,1,
+deficiencia,N,Não,2,
+resultado,Distinction,Aprovado com distinção,1,Concluiu
+resultado,Pass,Aprovado,2,Concluiu
+resultado,Fail,Reprovado,3,Não concluiu
+resultado,Withdrawn,Desistente,4,Não concluiu
+curso,AAA,Curso A,1,Ciências sociais
+curso,BBB,Curso B,2,Ciências sociais
+curso,CCC,Curso C,3,Exatas e tecnologia
+curso,DDD,Curso D,4,Exatas e tecnologia
+curso,EEE,Curso E,5,Exatas e tecnologia
+curso,FFF,Curso F,6,Exatas e tecnologia
+curso,GGG,Curso G,7,Ciências sociais
+inicio,B,Fevereiro,1,fev
+inicio,J,Outubro,2,out
+avaliacao,TMA,Trabalho corrigido pelo tutor,1,
+avaliacao,CMA,Atividade de correção automática,2,
+avaliacao,Exam,Exame final,3,
+atividade,oucontent,Conteúdo da disciplina,1,Estudo
+atividade,resource,Arquivo para leitura,2,Estudo
+atividade,url,Link externo,3,Estudo
+atividade,page,Página de texto,4,Estudo
+atividade,glossary,Glossário,5,Estudo
+atividade,dataplus,Base de consulta,6,Estudo
+atividade,dualpane,Conteúdo em painel duplo,7,Estudo
+atividade,htmlactivity,Atividade interativa,8,Estudo
+atividade,forumng,Fórum,9,Troca com colegas e tutor
+atividade,oucollaborate,Sala de videoconferência,10,Troca com colegas e tutor
+atividade,ouelluminate,Aula ao vivo,11,Troca com colegas e tutor
+atividade,ouwiki,Wiki colaborativa,12,Troca com colegas e tutor
+atividade,quiz,Questionário,13,Prática e avaliação
+atividade,externalquiz,Questionário externo,14,Prática e avaliação
+atividade,questionnaire,Pesquisa de opinião,15,Prática e avaliação
+atividade,repeatactivity,Atividade de revisão,16,Prática e avaliação
+atividade,homepage,Página inicial da turma,17,Navegação
+atividade,subpage,Página de seção,18,Navegação
+atividade,sharedsubpage,Página de seção compartilhada,19,Navegação
+atividade,folder,Pasta,20,Navegação

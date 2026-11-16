@@ -1,0 +1,21 @@
+name: pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  reconstruir-e-testar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      # baixa o OULAD do repositório da UCI e refaz as três camadas, o alerta e a auditoria
+      - run: python src/executar.py
+      - run: pytest -q

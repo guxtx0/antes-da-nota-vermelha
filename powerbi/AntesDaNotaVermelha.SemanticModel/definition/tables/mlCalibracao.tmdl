@@ -1,0 +1,65 @@
+/// Risco previsto contra a taxa observada de não conclusão, em décimos das turmas de teste.
+table mlCalibracao
+	lineageTag: b73bfea3-3f46-57c2-a75b-6406b1bb7989
+
+	column 'Décimo'
+		dataType: int64
+		formatString: 0
+		lineageTag: 4847ca54-8764-534f-b8d1-0568ac50f28d
+		summarizeBy: none
+		sourceColumn: decimo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Risco previsto'
+		dataType: double
+		formatString: 0%
+		lineageTag: f1ce4d08-082b-56fc-abfd-5404e177acc7
+		summarizeBy: none
+		sourceColumn: risco_previsto
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Taxa observada'
+		dataType: double
+		formatString: 0%
+		lineageTag: c67c49e7-1555-5a77-9580-18e370e7be0a
+		summarizeBy: none
+		sourceColumn: taxa_observada
+
+		annotation SummarizationSetBy = Automatic
+
+	column Alunos
+		dataType: int64
+		formatString: #,0
+		lineageTag: 21441251-a20a-5552-8781-0839e99167a7
+		summarizeBy: sum
+		sourceColumn: alunos
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome do décimo'
+		dataType: string
+		lineageTag: f1a44fdf-ee75-597b-b9af-a39690c62258
+		summarizeBy: none
+		sourceColumn: nome_do_decimo
+		sortByColumn: 'Décimo'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition mlCalibracao = m
+		mode: import
+		source =
+				let
+				    Arquivo = Parquet.Document(File.Contents(PastaDados & "\mlCalibracao.parquet")),
+				    Tipos = Table.TransformColumnTypes(Arquivo, {
+				        {"decimo", Int64.Type},
+				        {"risco_previsto", type number},
+				        {"taxa_observada", type number},
+				        {"alunos", Int64.Type},
+				        {"nome_do_decimo", type text}
+				    })
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

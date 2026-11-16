@@ -1,0 +1,93 @@
+/// Calendário do curso em semanas. A semana 0 reúne o período antes do início das aulas.
+table dSemana
+	lineageTag: d277a9fd-34dc-57f8-96fc-28422b17c96d
+
+	column Semana
+		dataType: int64
+		formatString: 0
+		lineageTag: d0cc6df0-e0c0-50d1-b885-77158575ea76
+		summarizeBy: none
+		sourceColumn: semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome da semana'
+		dataType: string
+		lineageTag: fb1c4837-6143-55a1-b61d-209f09b2e917
+		summarizeBy: none
+		sourceColumn: nome_da_semana
+		sortByColumn: Semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fase
+		dataType: string
+		lineageTag: 02687140-e6a9-5bbb-99cd-2c18e3346d72
+		summarizeBy: none
+		sourceColumn: fase
+		sortByColumn: 'Ordem da fase'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordem da fase'
+		dataType: int64
+		isHidden
+		lineageTag: ef29b17b-bb09-5e61-a1f4-3c5f02f275a8
+		summarizeBy: none
+		sourceColumn: ordem_fase
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Lado do corte'
+		dataType: string
+		lineageTag: cb885576-01dd-5e94-b304-a1304044bbb5
+		summarizeBy: none
+		sourceColumn: lado_do_corte
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bloco de 4 semanas'
+		dataType: string
+		lineageTag: 0e47f2a5-d30e-5dde-84ed-8b2751074564
+		summarizeBy: none
+		sourceColumn: bloco_de_4_semanas
+		sortByColumn: 'Ordem do bloco'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordem do bloco'
+		dataType: int64
+		isHidden
+		lineageTag: 2312e25c-979d-58fc-9559-0e4c6ec0d92c
+		summarizeBy: none
+		sourceColumn: ordem_bloco
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Durante o curso'
+		dataType: boolean
+		lineageTag: b33d5338-d590-53d6-8850-3b06873dc920
+		summarizeBy: none
+		sourceColumn: durante_o_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dSemana = m
+		mode: import
+		source =
+				let
+				    Arquivo = Parquet.Document(File.Contents(PastaDados & "\dSemana.parquet")),
+				    Tipos = Table.TransformColumnTypes(Arquivo, {
+				        {"semana", Int64.Type},
+				        {"nome_da_semana", type text},
+				        {"fase", type text},
+				        {"ordem_fase", Int64.Type},
+				        {"lado_do_corte", type text},
+				        {"bloco_de_4_semanas", type text},
+				        {"ordem_bloco", Int64.Type},
+				        {"durante_o_curso", type logical}
+				    })
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

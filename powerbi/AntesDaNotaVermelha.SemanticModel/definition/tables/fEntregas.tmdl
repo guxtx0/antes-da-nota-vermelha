@@ -1,0 +1,123 @@
+/// Avaliações entregues, com prazo, nota e pontualidade.
+table fEntregas
+	lineageTag: 5b60c715-1821-53e3-8e81-765707e8ffe1
+
+	column 'Chave da matrícula'
+		dataType: string
+		isHidden
+		lineageTag: 69332dd9-a1ba-5fbf-a3b5-bc9913622117
+		summarizeBy: none
+		sourceColumn: chave_matricula
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Avaliação'
+		dataType: int64
+		formatString: 0
+		lineageTag: b1685861-32d0-55e9-9e6c-e121232b27f3
+		summarizeBy: none
+		sourceColumn: avaliacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo de avaliação'
+		dataType: string
+		lineageTag: 25e6a17e-5bae-5871-b2e2-3a1222728dc4
+		summarizeBy: none
+		sourceColumn: tipo_de_avaliacao
+		sortByColumn: 'Ordem do tipo'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordem do tipo'
+		dataType: int64
+		isHidden
+		lineageTag: 9e89f6ca-4a78-59bc-868c-78b96f5de0f1
+		summarizeBy: none
+		sourceColumn: ordem_tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Peso
+		dataType: double
+		formatString: 0.0
+		lineageTag: 48afbb31-79af-5744-bad6-fd5dc10aac4d
+		summarizeBy: none
+		sourceColumn: peso
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia do prazo'
+		dataType: int64
+		formatString: 0
+		lineageTag: 05adf8b3-913a-5500-8066-d83f1b03d6d3
+		summarizeBy: none
+		sourceColumn: dia_do_prazo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia da entrega'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9a134fd8-b3c8-5c81-8337-53b54332a562
+		summarizeBy: none
+		sourceColumn: dia_da_entrega
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nota
+		dataType: double
+		formatString: 0.0
+		lineageTag: 435a1826-9f91-5e5d-9770-44a30bb1bbf6
+		summarizeBy: none
+		sourceColumn: nota
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dias de atraso'
+		dataType: int64
+		formatString: 0
+		lineageTag: 75f63400-f873-51d2-8ad7-dec6fa1ea0ab
+		summarizeBy: none
+		sourceColumn: dias_de_atraso
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pontualidade
+		dataType: string
+		lineageTag: 284f0421-acf2-5eed-ad8f-745154ef1e62
+		summarizeBy: none
+		sourceColumn: pontualidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cor da nota'
+		dataType: string
+		lineageTag: aad7d182-ad7e-595f-ac39-08383ef12574
+		summarizeBy: none
+		sourceColumn: cor_da_nota
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fEntregas = m
+		mode: import
+		source =
+				let
+				    Arquivo = Parquet.Document(File.Contents(PastaDados & "\fEntregas.parquet")),
+				    Tipos = Table.TransformColumnTypes(Arquivo, {
+				        {"chave_matricula", type text},
+				        {"avaliacao", Int64.Type},
+				        {"tipo_de_avaliacao", type text},
+				        {"ordem_tipo", Int64.Type},
+				        {"peso", type number},
+				        {"dia_do_prazo", Int64.Type},
+				        {"dia_da_entrega", Int64.Type},
+				        {"nota", type number},
+				        {"dias_de_atraso", Int64.Type},
+				        {"pontualidade", type text},
+				        {"cor_da_nota", type text}
+				    })
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

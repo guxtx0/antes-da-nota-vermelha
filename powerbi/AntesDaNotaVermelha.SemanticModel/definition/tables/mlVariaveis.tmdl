@@ -1,0 +1,54 @@
+/// Peso de cada variável na previsão: quanto a AUC cai quando ela é embaralhada.
+table mlVariaveis
+	lineageTag: db004f19-b9fd-5f94-8867-1656fe4cd89d
+
+	column 'Variável'
+		dataType: string
+		lineageTag: 9504c6b6-4284-5f34-abba-fbe4c735fa48
+		summarizeBy: none
+		sourceColumn: variavel
+		sortByColumn: 'Posição'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Família'
+		dataType: string
+		lineageTag: 26565477-9f9b-54d7-8777-532783bbe445
+		summarizeBy: none
+		sourceColumn: familia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Peso
+		dataType: double
+		formatString: 0.000
+		lineageTag: 989f1869-2dd7-5956-81d0-70d609ac058a
+		summarizeBy: none
+		sourceColumn: peso
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Posição'
+		dataType: int64
+		formatString: 0
+		lineageTag: 83723ee7-2ddb-5635-82c0-a2dfebadf0ad
+		summarizeBy: none
+		sourceColumn: posicao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition mlVariaveis = m
+		mode: import
+		source =
+				let
+				    Arquivo = Parquet.Document(File.Contents(PastaDados & "\mlVariaveis.parquet")),
+				    Tipos = Table.TransformColumnTypes(Arquivo, {
+				        {"variavel", type text},
+				        {"familia", type text},
+				        {"peso", type number},
+				        {"posicao", Int64.Type}
+				    })
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

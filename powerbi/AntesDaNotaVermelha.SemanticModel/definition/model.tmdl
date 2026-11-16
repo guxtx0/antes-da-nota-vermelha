@@ -1,0 +1,30 @@
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_ProTooling = ["DevMode"]
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["PastaDados","dTurma","dMatricula","dSemana","dAtividade","fAcessos","fPresenca","fEntregas","fRisco","pLimiar","engLinhagem","engVerificacoes","engTratamentos","mlMetricas","mlVariaveis","mlCalibracao","Medidas"]
+
+ref table dTurma
+ref table dMatricula
+ref table dSemana
+ref table dAtividade
+ref table fAcessos
+ref table fPresenca
+ref table fEntregas
+ref table fRisco
+ref table pLimiar
+ref table engLinhagem
+ref table engVerificacoes
+ref table engTratamentos
+ref table mlMetricas
+ref table mlVariaveis
+ref table mlCalibracao
+ref table Medidas

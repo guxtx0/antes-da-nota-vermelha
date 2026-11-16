@@ -1,0 +1,399 @@
+/// Todas as medidas do relatório, organizadas em pastas pela etapa do trabalho.
+table Medidas
+	lineageTag: 441ee558-f485-5c29-9078-3bc48495e574
+
+	/// Linhas somadas das tabelas do pipeline.
+	measure 'Total de linhas' = SUM(engLinhagem[Linhas])
+		formatString: #,0
+		displayFolder: 1 Engenharia
+		lineageTag: 35a3a75b-3486-5502-8fd2-c91a66483996
+
+	/// Total de linhas dos sete arquivos de origem.
+	measure 'Linhas lidas na origem' = CALCULATE([Total de linhas], engLinhagem[Camada] = "1. Bruto")
+		formatString: #,0
+		displayFolder: 1 Engenharia
+		lineageTag: 01614323-d668-5c10-bcb7-33d8db84090e
+
+	/// Quantidade de tabelas da camada de modelo.
+	measure 'Tabelas entregues ao painel' = CALCULATE(COUNTROWS(engLinhagem), engLinhagem[Camada] = "3. Modelo")
+		formatString: #,0
+		displayFolder: 1 Engenharia
+		lineageTag: 7ebfb317-da86-5bc8-8f8c-1605148d73ef
+
+	/// Verificações de qualidade executadas.
+	measure 'Verificações' = COUNTROWS(engVerificacoes)
+		formatString: #,0
+		displayFolder: 1 Engenharia
+		lineageTag: 90e760fb-6428-5633-a47d-99f1b8c66995
+
+	/// Verificações de qualidade que passaram.
+	measure 'Verificações aprovadas' = CALCULATE(COUNTROWS(engVerificacoes), engVerificacoes[Situação] = "Passou") + 0
+		formatString: #,0
+		displayFolder: 1 Engenharia
+		lineageTag: 98712427-2a3b-58b1-a953-ae6d69d436ea
+
+	/// Texto no formato 25 de 25.
+	measure 'Placar das verificações' = [Verificações aprovadas] & " de " & [Verificações]
+		displayFolder: 1 Engenharia
+		lineageTag: 682a91a2-beb7-58df-9476-089fb1914197
+
+	/// Registros afetados pelos tratamentos da camada tratada.
+	measure 'Registros tratados' = SUM(engTratamentos[Registros])
+		formatString: #,0
+		displayFolder: 1 Engenharia
+		lineageTag: 05f58855-e17e-5815-bf69-b9f022489982
+
+	/// Uma matrícula é um aluno em uma turma.
+	measure 'Matrículas' = COUNTROWS(dMatricula)
+		formatString: #,0
+		displayFolder: 2 Análise\Resultado
+		lineageTag: 0a90d6be-1e4e-559d-9831-986cdc9f428a
+
+	/// Matrículas que terminaram em aprovação, com ou sem distinção.
+	measure Concluintes = CALCULATE([Matrículas], dMatricula[Desfecho] = "Concluiu")
+		formatString: #,0
+		displayFolder: 2 Análise\Resultado
+		lineageTag: 22e81a51-1c1d-5632-b42b-b10540a8a1c4
+
+	/// Parcela das matrículas que termina em aprovação.
+	measure 'Taxa de conclusão' = DIVIDE([Concluintes], [Matrículas])
+		formatString: 0.0%
+		displayFolder: 2 Análise\Resultado
+		lineageTag: ac56469c-1b5e-5074-ae27-8e77a79a9720
+
+	/// Parcela das matrículas aprovadas com distinção.
+	measure 'Taxa de aprovação com distinção' = DIVIDE(CALCULATE([Matrículas], dMatricula[Resultado] = "Aprovado com distinção"), [Matrículas])
+		formatString: 0.0%
+		displayFolder: 2 Análise\Resultado
+		lineageTag: 74db455c-9522-59cf-8da9-1abb3b6e5eab
+
+	/// Parcela das matrículas aprovadas sem distinção.
+	measure 'Taxa de aprovação simples' = DIVIDE(CALCULATE([Matrículas], dMatricula[Resultado] = "Aprovado"), [Matrículas])
+		formatString: 0.0%
+		displayFolder: 2 Análise\Resultado
+		lineageTag: 049452f6-bae2-5ec5-912d-4c23e99f477a
+
+	/// Matrículas canceladas pelo aluno.
+	measure Desistentes = CALCULATE([Matrículas], dMatricula[Resultado] = "Desistente")
+		formatString: #,0
+		displayFolder: 2 Análise\Resultado
+		lineageTag: f6a56e01-14de-52a4-9c55-f9a00a19db8a
+
+	/// Parcela das matrículas que termina em desistência.
+	measure 'Taxa de desistência' = DIVIDE([Desistentes], [Matrículas])
+		formatString: 0.0%
+		displayFolder: 2 Análise\Resultado
+		lineageTag: d6790bf1-94c4-5c13-9f98-2d3d4902613b
+
+	/// Matrículas que foram até o fim e não atingiram a nota.
+	measure Reprovados = CALCULATE([Matrículas], dMatricula[Resultado] = "Reprovado")
+		formatString: #,0
+		displayFolder: 2 Análise\Resultado
+		lineageTag: 3379fb7c-2462-5ab9-9f46-d11008620022
+
+	/// Parcela das matrículas que termina em reprovação.
+	measure 'Taxa de reprovação' = DIVIDE([Reprovados], [Matrículas])
+		formatString: 0.0%
+		displayFolder: 2 Análise\Resultado
+		lineageTag: f5ebfc04-cc5e-582a-b955-e025f257c1c2
+
+	/// Matrículas canceladas antes do dia 0.
+	measure 'Saídas antes da primeira aula' = CALCULATE([Matrículas], dMatricula[Saiu antes do início] = TRUE())
+		formatString: #,0
+		displayFolder: 2 Análise\Permanência
+		lineageTag: 9f1d6529-6647-5c11-baf1-5fca43a7a17b
+
+	/// Matrículas canceladas antes do dia de corte do alerta.
+	measure 'Saídas até o dia 28' = CALCULATE([Matrículas], dMatricula[Situação no dia 28] = "Saiu antes do dia 28")
+		formatString: #,0
+		displayFolder: 2 Análise\Permanência
+		lineageTag: 98764659-22bb-57cb-a361-cf75979e01f3
+
+	/// Parcela das desistências que acontece antes do dia de corte.
+	measure 'Desistências até o dia 28' = DIVIDE([Saídas até o dia 28], [Desistentes])
+		formatString: 0.0%
+		displayFolder: 2 Análise\Permanência
+		lineageTag: a9d58d54-4c76-54f5-b1b1-dd5e6d49850b
+
+	/// Matrículas que não tinham sido canceladas até o fim da semana em análise.
+	measure 'Seguem matriculados' =
+			VAR SemanaAtual = MAX(dSemana[Semana])
+			RETURN
+			    CALCULATE(
+			        [Matrículas],
+			        FILTER(
+			            ALL(dMatricula[Semana do cancelamento]),
+			            ISBLANK(dMatricula[Semana do cancelamento])
+			                || dMatricula[Semana do cancelamento] > SemanaAtual
+			        )
+			    )
+		formatString: #,0
+		displayFolder: 2 Análise\Permanência
+		lineageTag: 0ac6ff82-ffab-53da-abbf-0131b62f9401
+
+	/// Parcela das matrículas que segue ativa ao fim da semana em análise.
+	measure 'Permanência' = DIVIDE([Seguem matriculados], [Matrículas])
+		formatString: 0.0%
+		displayFolder: 2 Análise\Permanência
+		lineageTag: c3a34536-5aea-5430-8d1a-5f67275c3b74
+
+	/// Matrículas canceladas na semana em análise.
+	measure 'Cancelamentos na semana' =
+			VAR SemanaAtual = MAX(dSemana[Semana])
+			RETURN
+			    CALCULATE(
+			        [Matrículas],
+			        FILTER(
+			            ALL(dMatricula[Semana do cancelamento]),
+			            NOT(ISBLANK(dMatricula[Semana do cancelamento]))
+			                && dMatricula[Semana do cancelamento] = SemanaAtual
+			        )
+			    )
+		formatString: #,0
+		displayFolder: 2 Análise\Permanência
+		lineageTag: f19c004e-01e8-5fe0-acf7-7d10f8dfcaf1
+
+	/// Cliques registrados no ambiente virtual.
+	measure 'Total de cliques' = SUM(fAcessos[Cliques])
+		formatString: #,0
+		displayFolder: 2 Análise\Engajamento
+		lineageTag: 48740349-ba6c-5d08-9a0d-3624adca31cb
+
+	/// Matrículas com pelo menos um acesso no período em análise.
+	measure 'Alunos com acesso' = DISTINCTCOUNT(fPresenca[Chave da matrícula])
+		formatString: #,0
+		displayFolder: 2 Análise\Engajamento
+		lineageTag: fd409fe9-f819-5bc2-ae11-2f632c19ac26
+
+	/// Parcela das matrículas que acessou o ambiente virtual no período em análise.
+	measure 'Matrículas com acesso' = DIVIDE([Alunos com acesso], [Matrículas])
+		formatString: 0.0%
+		displayFolder: 2 Análise\Engajamento
+		lineageTag: debd9c6c-29cf-5bec-9859-b095eb2fbb49
+
+	/// Parcela dos futuros concluintes com acesso no período.
+	measure 'Com acesso entre quem concluiu' = CALCULATE([Matrículas com acesso], dMatricula[Desfecho] = "Concluiu")
+		formatString: 0.0%
+		displayFolder: 2 Análise\Engajamento
+		lineageTag: 0cb3ab0e-1f78-500e-9a21-8cbf552ead4e
+
+	/// Parcela dos futuros não concluintes com acesso no período.
+	measure 'Com acesso entre quem não concluiu' = CALCULATE([Matrículas com acesso], dMatricula[Desfecho] = "Não concluiu")
+		formatString: 0.0%
+		displayFolder: 2 Análise\Engajamento
+		lineageTag: 1080af77-5f9b-51e0-bd16-6ee70e9f2354
+
+	/// Média de cliques por matrícula.
+	measure 'Cliques por matrícula' = DIVIDE([Total de cliques], [Matrículas])
+		formatString: #,0.0
+		displayFolder: 2 Análise\Engajamento
+		lineageTag: 45bb0d4b-d77b-5366-b3c5-325f639937a4
+
+	/// Média de cliques entre as matrículas que concluíram.
+	measure 'Cliques por matrícula de quem concluiu' = CALCULATE([Cliques por matrícula], dMatricula[Desfecho] = "Concluiu")
+		formatString: #,0.0
+		displayFolder: 2 Análise\Engajamento
+		lineageTag: f76a210f-8fbe-5c6c-b55b-ff2be87dcb93
+
+	/// Média de cliques entre as matrículas que não concluíram.
+	measure 'Cliques por matrícula de quem não concluiu' = CALCULATE([Cliques por matrícula], dMatricula[Desfecho] = "Não concluiu")
+		formatString: #,0.0
+		displayFolder: 2 Análise\Engajamento
+		lineageTag: d7810db1-1b27-53e6-bf07-6f5e20abb9fe
+
+	/// Quantas vezes o concluinte clica mais que o não concluinte.
+	measure 'Vezes mais cliques de quem conclui' = DIVIDE([Cliques por matrícula de quem concluiu], [Cliques por matrícula de quem não concluiu])
+		formatString: 0.0
+		displayFolder: 2 Análise\Engajamento
+		lineageTag: e72555c9-114a-59c8-9849-8358ab249f1b
+
+	/// Média de dias com acesso por matrícula em cada semana de aula. Vai de 0 a 7.
+	measure 'Dias com acesso por semana' =
+			VAR SemanasDeAula = CALCULATE(DISTINCTCOUNT(dSemana[Semana]), dSemana[Durante o curso] = TRUE())
+			VAR Dias = CALCULATE(SUM(fPresenca[Dias com acesso]), dSemana[Durante o curso] = TRUE())
+			RETURN
+			    DIVIDE(Dias, [Matrículas] * SemanasDeAula)
+		formatString: 0.0
+		displayFolder: 2 Análise\Engajamento
+		lineageTag: 3cda7aec-4219-59c6-ae31-6f06f239331a
+
+	/// Avaliações entregues.
+	measure Entregas = COUNTROWS(fEntregas)
+		formatString: #,0
+		displayFolder: 2 Análise\Engajamento
+		lineageTag: 6ad1471e-8d1e-5a5e-8093-83dc0d2e71bc
+
+	/// Média das notas, de 0 a 100.
+	measure 'Nota média' = AVERAGE(fEntregas[Nota])
+		formatString: 0.0
+		displayFolder: 2 Análise\Engajamento
+		lineageTag: 690beb20-66fb-562c-888c-4a7c5b11feda
+
+	/// AUC do modelo escolhido nas turmas que ele nunca viu.
+	measure 'AUC no teste' =
+			CALCULATE(
+			    MAX(mlMetricas[Valor]),
+			    mlMetricas[Escolhido] = "Sim",
+			    mlMetricas[Métrica] = "AUC",
+			    mlMetricas[Conjunto] = "Turmas de 2014 (teste)"
+			)
+		formatString: 0.000
+		displayFolder: 3 Ciência
+		lineageTag: d6c18254-5e44-5827-8f6d-f0205a22539c
+
+	/// Valor da métrica nas turmas de teste.
+	measure 'Métrica no teste' = CALCULATE(MAX(mlMetricas[Valor]), mlMetricas[Conjunto] = "Turmas de 2014 (teste)")
+		formatString: 0.000
+		displayFolder: 3 Ciência
+		lineageTag: 30317153-facc-5d65-9578-d12703b795f6
+
+	/// Queda na AUC quando a variável é embaralhada.
+	measure 'Peso da variável' = SUM(mlVariaveis[Peso])
+		formatString: 0.000
+		displayFolder: 3 Ciência
+		lineageTag: c7ccef73-f4e0-5165-adfb-41bc23c21e08
+
+	/// Peso da variável, só para as dez mais importantes.
+	measure 'Peso das 10 principais' = IF(MAX(mlVariaveis[Posição]) <= 10, [Peso da variável])
+		formatString: 0.000
+		displayFolder: 3 Ciência
+		lineageTag: b8465d6a-77a6-574c-ab53-124802e378ca
+
+	/// Risco médio previsto no décimo.
+	measure 'Risco previsto médio' = AVERAGE(mlCalibracao[Risco previsto])
+		formatString: 0%
+		displayFolder: 3 Ciência
+		lineageTag: 4677bb99-f398-5df9-90ae-68e1e688f7e5
+
+	/// Parcela que de fato não concluiu no décimo.
+	measure 'Não conclusão observada' = AVERAGE(mlCalibracao[Taxa observada])
+		formatString: 0%
+		displayFolder: 3 Ciência
+		lineageTag: 4f980e02-5dea-54ed-9665-366a020c0a7c
+
+	/// Matrículas ativas no dia 28, que recebem nota de risco.
+	measure 'Alunos avaliados' = COUNTROWS(fRisco)
+		formatString: #,0
+		displayFolder: 4 Decisão
+		lineageTag: a6afc185-76de-55ef-a7bf-eec870d6d589
+
+	/// Nota de risco a partir da qual o aluno entra na lista. Sem seleção, vale 60%.
+	measure 'Limiar escolhido' = SELECTEDVALUE(pLimiar[Limiar], 0.6)
+		formatString: 0%
+		displayFolder: 4 Decisão
+		lineageTag: 673ed330-0786-5a02-8f2a-02dcc373ee86
+
+	/// Alunos com nota de risco igual ou acima do limiar.
+	measure 'Alunos na lista' =
+			VAR Corte = [Limiar escolhido]
+			RETURN
+			    COUNTROWS(FILTER(fRisco, fRisco[Risco] >= Corte)) + 0
+		formatString: #,0
+		displayFolder: 4 Decisão
+		lineageTag: a8435156-1457-531d-a96a-ae5a76291f2c
+
+	/// Alunos da lista que de fato não concluíram.
+	measure 'Alertas certos' =
+			VAR Corte = [Limiar escolhido]
+			RETURN
+			    CALCULATE(
+			        COUNTROWS(FILTER(fRisco, fRisco[Risco] >= Corte)),
+			        dMatricula[Desfecho] = "Não concluiu"
+			    ) + 0
+		formatString: #,0
+		displayFolder: 4 Decisão
+		lineageTag: 609fe47b-f430-578c-95b4-188544e5edf8
+
+	/// Alunos avaliados que não concluíram.
+	measure 'Não concluintes avaliados' = CALCULATE([Alunos avaliados], dMatricula[Desfecho] = "Não concluiu")
+		formatString: #,0
+		displayFolder: 4 Decisão
+		lineageTag: a6191669-ab1f-5d4b-8516-97b2db963fd7
+
+	/// De cada 100 alunos da lista, quantos de fato não concluíram (precisão).
+	measure 'Acerto do alerta' = DIVIDE([Alertas certos], [Alunos na lista])
+		formatString: 0.0%
+		displayFolder: 4 Decisão
+		lineageTag: 24b5f9a4-6708-56d6-8a1b-ed66402af07f
+
+	/// De cada 100 alunos que não concluíram, quantos estavam na lista (recall).
+	measure 'Alcance do alerta' = DIVIDE([Alertas certos], [Não concluintes avaliados])
+		formatString: 0.0%
+		displayFolder: 4 Decisão
+		lineageTag: f66f6f1b-c108-595a-802b-a0c21d1e8705
+
+	/// Tamanho da lista em relação aos alunos avaliados.
+	measure 'Parcela da turma na lista' = DIVIDE([Alunos na lista], [Alunos avaliados])
+		formatString: 0.0%
+		displayFolder: 4 Decisão
+		lineageTag: 6848ef85-b18f-5099-94e3-33d6b7bc888c
+
+	/// Taxa de não conclusão entre os alunos avaliados. É o acerto de uma lista montada ao acaso.
+	measure 'Não conclusão entre os avaliados' = DIVIDE([Não concluintes avaliados], [Alunos avaliados])
+		formatString: 0.0%
+		displayFolder: 4 Decisão
+		lineageTag: cb33d129-0301-53e5-82ce-47ee3e1f697d
+
+	/// Quantas vezes a lista acerta mais do que um sorteio.
+	measure 'Ganho sobre o acaso' = DIVIDE([Acerto do alerta], [Não conclusão entre os avaliados])
+		formatString: 0.00
+		displayFolder: 4 Decisão
+		lineageTag: 23ab1f7b-0443-5a38-b52b-ea6fd313d73c
+
+	/// Alunos que não concluíram e não entraram na lista.
+	measure 'Ficam fora da lista' = [Não concluintes avaliados] - [Alertas certos]
+		formatString: #,0
+		displayFolder: 4 Decisão
+		lineageTag: 3d51b80a-0fdd-538b-8b8b-be64369829de
+
+	/// Nota de risco do aluno, exibida só para quem está na lista.
+	measure 'Risco do aluno' =
+			VAR Nota = MAX(fRisco[Risco])
+			RETURN
+			    IF(Nota >= [Limiar escolhido], Nota)
+		formatString: 0%
+		displayFolder: 4 Decisão
+		lineageTag: 9fb91285-65b5-515c-8653-53ae0fc23227
+
+	/// Dias desde o último acesso, contados no dia 28.
+	measure 'Dias sem acessar do aluno' = IF(NOT(ISBLANK([Risco do aluno])), MAX(fRisco[Dias sem acessar no dia 28]))
+		formatString: 0
+		displayFolder: 4 Decisão
+		lineageTag: 14cd3ed7-1c2f-58ba-bc9b-b41ebea44290
+
+	/// Dias com acesso até o dia 28.
+	measure 'Dias com acesso do aluno' = IF(NOT(ISBLANK([Risco do aluno])), MAX(fRisco[Dias com acesso até o dia 28]) + 0)
+		formatString: 0
+		displayFolder: 4 Decisão
+		lineageTag: 55bafcbc-454c-5b39-ac52-c7a6b3bd69aa
+
+	/// Parcela das avaliações com prazo vencido que o aluno entregou.
+	measure 'Entregas do aluno' = IF(NOT(ISBLANK([Risco do aluno])), MAX(fRisco[Parcela entregue até o dia 28]))
+		formatString: 0%
+		displayFolder: 4 Decisão
+		lineageTag: f129f9c9-c952-5ec4-8342-2e22bf7ce851
+
+	/// Nota média nas entregas feitas até o dia 28.
+	measure 'Nota do aluno' = IF(NOT(ISBLANK([Risco do aluno])), MAX(fRisco[Nota média até o dia 28]))
+		formatString: 0.0
+		displayFolder: 4 Decisão
+		lineageTag: 261145c1-7ce8-5506-9471-a47fd41e066c
+
+	column Coluna
+		dataType: string
+		isHidden
+		lineageTag: 2857a346-c6a6-5cfe-af73-9bc010c6e544
+		summarizeBy: none
+		sourceColumn: Coluna
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Medidas = m
+		mode: import
+		source =
+				let
+				    Vazia = #table(type table [Coluna = text], {})
+				in
+				    Vazia
+
+	annotation PBI_ResultType = Table

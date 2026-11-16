@@ -1,0 +1,12 @@
+# dados que o pipeline baixa ou reconstrói
+dados/0_origem/
+dados/1_bruto/
+dados/2_tratado/
+
+# Python
+__pycache__/
+.pytest_cache/
+
+# arquivos locais do Power BI Desktop
+powerbi/**/.pbi/localSettings.json
+powerbi/**/.pbi/cache.abf

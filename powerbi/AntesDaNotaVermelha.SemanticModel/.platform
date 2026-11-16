@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "AntesDaNotaVermelha"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "800019c5-93c7-531b-bd3a-12785ddea4d4"
+  }
+}

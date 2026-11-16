@@ -1,0 +1,82 @@
+/// Caminho de cada tabela pelo pipeline, com o volume em cada camada.
+table engLinhagem
+	lineageTag: c852f136-c0a5-58ac-ad9c-c992de91f738
+
+	column Ordem
+		dataType: int64
+		formatString: 0
+		lineageTag: 134c1621-082f-5654-a97a-77382e29645b
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column Camada
+		dataType: string
+		lineageTag: 362f8d4e-1f4c-5133-a5bd-814e22a3e881
+		summarizeBy: none
+		sourceColumn: camada
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tabela
+		dataType: string
+		lineageTag: eade01bb-8ca9-5ec0-92e6-c025b4ac9d61
+		summarizeBy: none
+		sourceColumn: tabela
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column Origem
+		dataType: string
+		lineageTag: f172b6d7-ca9a-5742-83bc-873e51648a5e
+		summarizeBy: none
+		sourceColumn: origem
+
+		annotation SummarizationSetBy = Automatic
+
+	column Linhas
+		dataType: int64
+		formatString: #,0
+		lineageTag: daa3a8d1-10a9-5c28-95d7-aeb6f9427aa1
+		summarizeBy: sum
+		sourceColumn: linhas
+
+		annotation SummarizationSetBy = Automatic
+
+	column Colunas
+		dataType: int64
+		formatString: 0
+		lineageTag: ee1cc84b-f55d-50e4-a14f-dcd4f2d28115
+		summarizeBy: sum
+		sourceColumn: colunas
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'O que acontece'
+		dataType: string
+		lineageTag: 89fefa06-507b-5176-88c0-c4741963cdb6
+		summarizeBy: none
+		sourceColumn: o_que_acontece
+
+		annotation SummarizationSetBy = Automatic
+
+	partition engLinhagem = m
+		mode: import
+		source =
+				let
+				    Arquivo = Parquet.Document(File.Contents(PastaDados & "\engLinhagem.parquet")),
+				    Tipos = Table.TransformColumnTypes(Arquivo, {
+				        {"ordem", Int64.Type},
+				        {"camada", type text},
+				        {"tabela", type text},
+				        {"origem", type text},
+				        {"linhas", Int64.Type},
+				        {"colunas", Int64.Type},
+				        {"o_que_acontece", type text}
+				    })
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

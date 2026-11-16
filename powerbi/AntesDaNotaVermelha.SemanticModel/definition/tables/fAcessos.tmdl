@@ -1,0 +1,65 @@
+/// Cliques por matrícula, semana e tipo de atividade.
+table fAcessos
+	lineageTag: 531139a9-2458-5246-92d5-7170263cfc2d
+
+	column 'Chave da matrícula'
+		dataType: string
+		isHidden
+		lineageTag: 83bf563f-e869-53cb-8306-91a0685c9ee4
+		summarizeBy: none
+		sourceColumn: chave_matricula
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Semana do acesso'
+		dataType: int64
+		isHidden
+		lineageTag: 1ae7314c-abb4-5a82-b0ba-207f5a0d3714
+		summarizeBy: none
+		sourceColumn: semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Código da atividade'
+		dataType: string
+		isHidden
+		lineageTag: d4af69c0-8033-5a82-a53d-a9cf3ae136a9
+		summarizeBy: none
+		sourceColumn: codigo_atividade
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cliques
+		dataType: int64
+		formatString: #,0
+		lineageTag: a015d825-9720-5fb7-af4d-816fd01c27f3
+		summarizeBy: sum
+		sourceColumn: cliques
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Materiais diferentes'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 13da93e3-e3ff-5ee4-9d52-21298c2c9bf7
+		summarizeBy: sum
+		sourceColumn: materiais_diferentes
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fAcessos = m
+		mode: import
+		source =
+				let
+				    Arquivo = Parquet.Document(File.Contents(PastaDados & "\fAcessos.parquet")),
+				    Tipos = Table.TransformColumnTypes(Arquivo, {
+				        {"chave_matricula", type text},
+				        {"semana", Int64.Type},
+				        {"codigo_atividade", type text},
+				        {"cliques", Int64.Type},
+				        {"materiais_diferentes", Int64.Type}
+				    })
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,258 @@
+/// Uma linha por matrícula: perfil do aluno, resultado final e momento da saída.
+table dMatricula
+	lineageTag: c103b71c-80c1-537e-bf90-49a580a821f5
+
+	column 'Chave da matrícula'
+		dataType: string
+		isHidden
+		lineageTag: 046c3745-e427-52ce-a045-58102319f434
+		summarizeBy: none
+		sourceColumn: chave_matricula
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Chave da turma'
+		dataType: string
+		isHidden
+		lineageTag: 5378c2bb-9354-5c6a-b3ed-b81e807444c1
+		summarizeBy: none
+		sourceColumn: chave_turma
+
+		annotation SummarizationSetBy = Automatic
+
+	column Aluno
+		dataType: int64
+		formatString: 0
+		lineageTag: 1aa731d4-0dd0-5f84-a30d-c8ed2aebb1f1
+		summarizeBy: none
+		sourceColumn: aluno
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Gênero'
+		dataType: string
+		lineageTag: 3884cb12-fdbe-5ecd-a1b5-66a97df25d86
+		summarizeBy: none
+		sourceColumn: genero
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Região'
+		dataType: string
+		lineageTag: 86b9c583-0989-571a-97b6-0212bac791c7
+		summarizeBy: none
+		sourceColumn: regiao
+
+		annotation SummarizationSetBy = Automatic
+
+	column Escolaridade
+		dataType: string
+		lineageTag: 3dc27686-acbb-5524-ac5c-44e234bf7ba3
+		summarizeBy: none
+		sourceColumn: escolaridade
+		sortByColumn: 'Ordem da escolaridade'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordem da escolaridade'
+		dataType: int64
+		isHidden
+		lineageTag: 359f54d1-1a10-5891-8e50-64fcbc18bf0c
+		summarizeBy: none
+		sourceColumn: ordem_escolaridade
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Faixa etária'
+		dataType: string
+		lineageTag: 65b45ee5-5a8d-54d2-b8ef-fb6868dbbeed
+		summarizeBy: none
+		sourceColumn: faixa_etaria
+		sortByColumn: 'Ordem da faixa etária'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordem da faixa etária'
+		dataType: int64
+		isHidden
+		lineageTag: 52d9dbe9-ab4b-5525-952f-876090dbdcec
+		summarizeBy: none
+		sourceColumn: ordem_faixa_etaria
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Faixa de privação'
+		dataType: string
+		lineageTag: 013e00d4-1f93-542e-ac4f-5e7251266b29
+		summarizeBy: none
+		sourceColumn: faixa_privacao
+		sortByColumn: 'Ordem da faixa de privação'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordem da faixa de privação'
+		dataType: int64
+		isHidden
+		lineageTag: 6fb8e24e-3f57-595d-a8c8-98590ae12212
+		summarizeBy: none
+		sourceColumn: ordem_faixa_privacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tentativas anteriores'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8a7b6de7-d5e8-5c82-8e44-1a4f3d71c07f
+		summarizeBy: none
+		sourceColumn: tentativas_anteriores
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Créditos em curso'
+		dataType: int64
+		formatString: 0
+		lineageTag: d9bb84a2-7dae-5c1e-adf6-7ecb64b4a44e
+		summarizeBy: none
+		sourceColumn: creditos_em_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Declarou deficiência'
+		dataType: string
+		lineageTag: 786ceaab-999d-5394-94a8-70bf46a7f007
+		summarizeBy: none
+		sourceColumn: declarou_deficiencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Resultado
+		dataType: string
+		lineageTag: 39d1f4b0-d0ee-5176-8579-058fab70e5f1
+		summarizeBy: none
+		sourceColumn: resultado
+		sortByColumn: 'Ordem do resultado'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordem do resultado'
+		dataType: int64
+		isHidden
+		lineageTag: 9d668475-0299-5fdf-b22f-e082b9df284b
+		summarizeBy: none
+		sourceColumn: ordem_resultado
+
+		annotation SummarizationSetBy = Automatic
+
+	column Desfecho
+		dataType: string
+		lineageTag: 7aa43f12-fc96-5d92-b503-3a3a227cad95
+		summarizeBy: none
+		sourceColumn: desfecho
+
+		annotation SummarizationSetBy = Automatic
+
+	column Concluiu
+		dataType: boolean
+		lineageTag: f57b6a8d-85d1-51bc-ab6b-4b9ab05416e8
+		summarizeBy: none
+		sourceColumn: concluiu
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia da matrícula'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9758a7e2-e0f4-5510-919b-4da75ace7909
+		summarizeBy: none
+		sourceColumn: dia_matricula
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia do cancelamento'
+		dataType: int64
+		formatString: 0
+		lineageTag: e375a88b-183e-51df-9448-5c3cd6e506f3
+		summarizeBy: none
+		sourceColumn: dia_cancelamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Semana do cancelamento'
+		dataType: int64
+		formatString: 0
+		lineageTag: 635904f7-0988-57f7-9e2c-b93d1b1ee2f3
+		summarizeBy: none
+		sourceColumn: semana_do_cancelamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Saiu antes do início'
+		dataType: boolean
+		lineageTag: b87ea204-51b7-5e28-9e8c-143d23430bcb
+		summarizeBy: none
+		sourceColumn: saiu_antes_do_inicio
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Situação no dia 28'
+		dataType: string
+		lineageTag: bf8e3a78-b0c8-5687-aeac-4782783d1819
+		summarizeBy: none
+		sourceColumn: situacao_no_dia_28
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Primeiro trabalho'
+		dataType: string
+		lineageTag: 5d5e682f-8aa4-5942-84a4-5c51373d5c6c
+		summarizeBy: none
+		sourceColumn: primeiro_trabalho
+		sortByColumn: 'Ordem do primeiro trabalho'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordem do primeiro trabalho'
+		dataType: int64
+		isHidden
+		lineageTag: 441dc491-d009-51f9-906d-1ccf981cc7c3
+		summarizeBy: none
+		sourceColumn: ordem_primeiro_trabalho
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dMatricula = m
+		mode: import
+		source =
+				let
+				    Arquivo = Parquet.Document(File.Contents(PastaDados & "\dMatricula.parquet")),
+				    Tipos = Table.TransformColumnTypes(Arquivo, {
+				        {"chave_matricula", type text},
+				        {"chave_turma", type text},
+				        {"aluno", Int64.Type},
+				        {"genero", type text},
+				        {"regiao", type text},
+				        {"escolaridade", type text},
+				        {"ordem_escolaridade", Int64.Type},
+				        {"faixa_etaria", type text},
+				        {"ordem_faixa_etaria", Int64.Type},
+				        {"faixa_privacao", type text},
+				        {"ordem_faixa_privacao", Int64.Type},
+				        {"tentativas_anteriores", Int64.Type},
+				        {"creditos_em_curso", Int64.Type},
+				        {"declarou_deficiencia", type text},
+				        {"resultado", type text},
+				        {"ordem_resultado", Int64.Type},
+				        {"desfecho", type text},
+				        {"concluiu", type logical},
+				        {"dia_matricula", Int64.Type},
+				        {"dia_cancelamento", Int64.Type},
+				        {"semana_do_cancelamento", Int64.Type},
+				        {"saiu_antes_do_inicio", type logical},
+				        {"situacao_no_dia_28", type text},
+				        {"primeiro_trabalho", type text},
+				        {"ordem_primeiro_trabalho", Int64.Type}
+				    })
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,112 @@
+{
+  "name": "Nota vermelha",
+  "dataColors": [
+    "#2646B8",
+    "#5B8DEF",
+    "#E8843C",
+    "#D0312D",
+    "#1B2540",
+    "#9AA3B5",
+    "#C3C9D4",
+    "#7A8AC9"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#1B2540",
+  "tableAccent": "#2646B8",
+  "good": "#2646B8",
+  "neutral": "#E8843C",
+  "bad": "#D0312D",
+  "maximum": "#2646B8",
+  "center": "#A9BBEB",
+  "minimum": "#EEF2FC",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Georgia",
+      "fontSize": 22,
+      "color": "#1B2540"
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 11,
+      "color": "#1B2540"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 10,
+      "color": "#1B2540"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 9,
+      "color": "#5E6676"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": false
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ],
+        "categoryAxis": [
+          {
+            "showAxisTitle": false,
+            "gridlineShow": false
+          }
+        ],
+        "valueAxis": [
+          {
+            "showAxisTitle": false,
+            "gridlineColor": {
+              "solid": {
+                "color": "#D9DDE5"
+              }
+            },
+            "gridlineStyle": "solid"
+          }
+        ],
+        "legend": [
+          {
+            "position": "Top",
+            "showTitle": false
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#E9ECF2"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    }
+  }
+}

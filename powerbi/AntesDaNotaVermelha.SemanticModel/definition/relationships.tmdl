@@ -1,0 +1,31 @@
+relationship 69453c98-e9a5-5114-ba78-ea36de432bbd
+	fromColumn: dMatricula.'Chave da turma'
+	toColumn: dTurma.'Chave da turma'
+
+relationship 6d87a254-c641-5655-9827-ab959f321eb7
+	fromColumn: fAcessos.'Chave da matrícula'
+	toColumn: dMatricula.'Chave da matrícula'
+
+relationship 9cfca1f2-553e-540b-b6d2-d044b7c17384
+	fromColumn: fAcessos.'Semana do acesso'
+	toColumn: dSemana.Semana
+
+relationship ad222541-efac-57f4-b6de-67269bea5ba7
+	fromColumn: fAcessos.'Código da atividade'
+	toColumn: dAtividade.'Código da atividade'
+
+relationship c6e1f31e-8a7b-53a7-8ce1-d4e4760c4028
+	fromColumn: fPresenca.'Chave da matrícula'
+	toColumn: dMatricula.'Chave da matrícula'
+
+relationship bdccb1a2-eb6a-5d78-9b68-775c57c8191d
+	fromColumn: fPresenca.'Semana do acesso'
+	toColumn: dSemana.Semana
+
+relationship fc6043ad-a2af-5330-864c-22abaf661d0a
+	fromColumn: fEntregas.'Chave da matrícula'
+	toColumn: dMatricula.'Chave da matrícula'
+
+relationship c412be53-65eb-5a43-bf83-04ffe99274d2
+	fromColumn: fRisco.'Chave da matrícula'
+	toColumn: dMatricula.'Chave da matrícula'

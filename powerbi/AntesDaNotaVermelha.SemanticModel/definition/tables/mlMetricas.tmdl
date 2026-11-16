@@ -1,0 +1,61 @@
+/// Métricas de qualidade dos modelos comparados.
+table mlMetricas
+	lineageTag: 58f2bdc6-b82d-5426-a421-a444db658156
+
+	column Modelo
+		dataType: string
+		lineageTag: 4bc5d455-7a3c-57cc-a3d5-a27c34707509
+		summarizeBy: none
+		sourceColumn: modelo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Conjunto
+		dataType: string
+		lineageTag: c5220bea-4df6-58d6-8dc2-968d299d9ba9
+		summarizeBy: none
+		sourceColumn: conjunto
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Métrica'
+		dataType: string
+		lineageTag: c73f3ae1-7265-5660-b782-8856b1df14bf
+		summarizeBy: none
+		sourceColumn: metrica
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valor
+		dataType: double
+		formatString: 0.000
+		lineageTag: e299f835-7c2d-56a7-bdf4-93c3bb6bc433
+		summarizeBy: none
+		sourceColumn: valor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Escolhido
+		dataType: string
+		lineageTag: ca42727e-4f75-59bf-a763-d4ecc8dbe092
+		summarizeBy: none
+		sourceColumn: escolhido
+
+		annotation SummarizationSetBy = Automatic
+
+	partition mlMetricas = m
+		mode: import
+		source =
+				let
+				    Arquivo = Parquet.Document(File.Contents(PastaDados & "\mlMetricas.parquet")),
+				    Tipos = Table.TransformColumnTypes(Arquivo, {
+				        {"modelo", type text},
+				        {"conjunto", type text},
+				        {"metrica", type text},
+				        {"valor", type number},
+				        {"escolhido", type text}
+				    })
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

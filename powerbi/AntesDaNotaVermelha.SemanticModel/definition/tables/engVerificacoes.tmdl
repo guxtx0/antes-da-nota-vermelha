@@ -1,0 +1,72 @@
+/// Resultado de cada verificação de qualidade executada pelo pipeline.
+table engVerificacoes
+	lineageTag: 2c4510a7-62c9-549e-9321-0b605266b592
+
+	column Ordem
+		dataType: int64
+		formatString: 0
+		lineageTag: d37b60c7-c697-5841-8bff-2081357920fa
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column Grupo
+		dataType: string
+		lineageTag: 0e0a41c7-4b55-53b3-9f54-ca99373647e6
+		summarizeBy: none
+		sourceColumn: grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Verificação'
+		dataType: string
+		lineageTag: a1c0e2a6-7f7e-5e60-b0ca-ae7b006159fe
+		summarizeBy: none
+		sourceColumn: verificacao
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column Regra
+		dataType: string
+		lineageTag: cb18ffff-4810-541f-ae20-2bbb508a3dca
+		summarizeBy: none
+		sourceColumn: regra
+
+		annotation SummarizationSetBy = Automatic
+
+	column Observado
+		dataType: double
+		formatString: #,0.###
+		lineageTag: 937c7d44-0b83-59a9-b3dd-71e063eec55f
+		summarizeBy: none
+		sourceColumn: observado
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Situação'
+		dataType: string
+		lineageTag: c9278bc9-9770-5a2f-991f-66b68a750671
+		summarizeBy: none
+		sourceColumn: situacao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition engVerificacoes = m
+		mode: import
+		source =
+				let
+				    Arquivo = Parquet.Document(File.Contents(PastaDados & "\engVerificacoes.parquet")),
+				    Tipos = Table.TransformColumnTypes(Arquivo, {
+				        {"ordem", Int64.Type},
+				        {"grupo", type text},
+				        {"verificacao", type text},
+				        {"regra", type text},
+				        {"observado", type number},
+				        {"situacao", type text}
+				    })
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

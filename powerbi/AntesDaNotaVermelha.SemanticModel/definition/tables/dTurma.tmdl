@@ -1,0 +1,120 @@
+/// Uma linha por turma: o curso, a área, o ano e o papel da turma no alerta.
+table dTurma
+	lineageTag: 55c82d88-1a9a-5baf-a329-d5a80d625013
+
+	column 'Chave da turma'
+		dataType: string
+		isHidden
+		lineageTag: 2e27ffed-b8f7-5c24-8573-91ceaea5974e
+		summarizeBy: none
+		sourceColumn: chave_turma
+
+		annotation SummarizationSetBy = Automatic
+
+	column Curso
+		dataType: string
+		lineageTag: 1de1621a-7a43-5bb3-9eb0-671f925ace04
+		summarizeBy: none
+		sourceColumn: curso
+		sortByColumn: 'Ordem do curso'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Área'
+		dataType: string
+		lineageTag: 8122427a-d77d-5ac3-b774-0bc5a600b28f
+		summarizeBy: none
+		sourceColumn: area
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordem do curso'
+		dataType: int64
+		isHidden
+		lineageTag: cdbeaf55-8f33-5453-8593-d1abfc06690c
+		summarizeBy: none
+		sourceColumn: ordem_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 5695e420-6ae7-5529-bcaa-701dd4941b33
+		summarizeBy: none
+		sourceColumn: ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mês de início'
+		dataType: string
+		lineageTag: 965413d4-f72c-55f7-92c6-862bb078c31d
+		summarizeBy: none
+		sourceColumn: mes_de_inicio
+
+		annotation SummarizationSetBy = Automatic
+
+	column Turma
+		dataType: string
+		lineageTag: 70e3935e-fc6d-569d-82d4-0bc4a81b6e8d
+		summarizeBy: none
+		sourceColumn: turma
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Duração em dias'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e6be23c-61d5-5913-9f99-6a58bc8231a7
+		summarizeBy: none
+		sourceColumn: duracao_dias
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Duração em semanas'
+		dataType: int64
+		formatString: 0
+		lineageTag: f76a7a17-aee8-5bca-bcaa-dac5edc244bc
+		summarizeBy: none
+		sourceColumn: duracao_semanas
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Papel no alerta'
+		dataType: string
+		lineageTag: a3c799da-fc5f-5a10-a5ba-bb90a9011deb
+		summarizeBy: none
+		sourceColumn: papel_no_alerta
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Código original'
+		dataType: string
+		lineageTag: 43ecc79c-01d1-51a9-8039-aecba25c0f69
+		summarizeBy: none
+		sourceColumn: codigo_original
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dTurma = m
+		mode: import
+		source =
+				let
+				    Arquivo = Parquet.Document(File.Contents(PastaDados & "\dTurma.parquet")),
+				    Tipos = Table.TransformColumnTypes(Arquivo, {
+				        {"chave_turma", type text},
+				        {"curso", type text},
+				        {"area", type text},
+				        {"ordem_curso", Int64.Type},
+				        {"ano", Int64.Type},
+				        {"mes_de_inicio", type text},
+				        {"turma", type text},
+				        {"duracao_dias", Int64.Type},
+				        {"duracao_semanas", Int64.Type},
+				        {"papel_no_alerta", type text},
+				        {"codigo_original", type text}
+				    })
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

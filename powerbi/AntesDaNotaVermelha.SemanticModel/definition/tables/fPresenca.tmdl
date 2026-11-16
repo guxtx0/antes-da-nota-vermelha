@@ -1,0 +1,55 @@
+/// Presença semanal no ambiente virtual: cliques e dias com acesso por matrícula e semana.
+table fPresenca
+	lineageTag: dc481cf2-2e55-5f5c-b94b-ef90c6b6dd20
+
+	column 'Chave da matrícula'
+		dataType: string
+		isHidden
+		lineageTag: 78b5d46f-e919-576e-b168-3ce0132d5456
+		summarizeBy: none
+		sourceColumn: chave_matricula
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Semana do acesso'
+		dataType: int64
+		isHidden
+		lineageTag: 9092df06-bd8a-51a3-86c7-bd2f87bdd84b
+		summarizeBy: none
+		sourceColumn: semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cliques
+		dataType: int64
+		formatString: #,0
+		lineageTag: d527ce12-ba9f-58bc-9396-ea00521841b6
+		summarizeBy: sum
+		sourceColumn: cliques
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dias com acesso'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 598ca6d0-f303-508b-a2dc-14ca02a76022
+		summarizeBy: sum
+		sourceColumn: dias_com_acesso
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fPresenca = m
+		mode: import
+		source =
+				let
+				    Arquivo = Parquet.Document(File.Contents(PastaDados & "\fPresenca.parquet")),
+				    Tipos = Table.TransformColumnTypes(Arquivo, {
+				        {"chave_matricula", type text},
+				        {"semana", Int64.Type},
+				        {"cliques", Int64.Type},
+				        {"dias_com_acesso", Int64.Type}
+				    })
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

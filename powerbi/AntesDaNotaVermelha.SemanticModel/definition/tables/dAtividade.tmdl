@@ -1,0 +1,54 @@
+/// Tipos de atividade do ambiente virtual, agrupados pela finalidade pedagógica.
+table dAtividade
+	lineageTag: 1dc6e522-3174-537c-a1e2-92083eee8992
+
+	column 'Código da atividade'
+		dataType: string
+		isHidden
+		lineageTag: d86100f6-e256-5a10-9828-5b7dda28c921
+		summarizeBy: none
+		sourceColumn: codigo_atividade
+
+		annotation SummarizationSetBy = Automatic
+
+	column Atividade
+		dataType: string
+		lineageTag: 69582bd3-c249-5890-91e2-a875b9290ee2
+		summarizeBy: none
+		sourceColumn: atividade
+		sortByColumn: 'Ordem da atividade'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Finalidade
+		dataType: string
+		lineageTag: e7655189-d27c-512d-b9a6-e6e2c1238210
+		summarizeBy: none
+		sourceColumn: finalidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordem da atividade'
+		dataType: int64
+		isHidden
+		lineageTag: e04e80ee-41a7-52f6-9872-2bd88252a60a
+		summarizeBy: none
+		sourceColumn: ordem_atividade
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dAtividade = m
+		mode: import
+		source =
+				let
+				    Arquivo = Parquet.Document(File.Contents(PastaDados & "\dAtividade.parquet")),
+				    Tipos = Table.TransformColumnTypes(Arquivo, {
+				        {"codigo_atividade", type text},
+				        {"atividade", type text},
+				        {"finalidade", type text},
+				        {"ordem_atividade", Int64.Type}
+				    })
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

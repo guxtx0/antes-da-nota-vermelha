@@ -1,0 +1,114 @@
+/// Nota de risco de cada matrícula ativa no dia 28, com os sinais que a explicam.
+table fRisco
+	lineageTag: b52c1e3a-af0a-5908-8bd3-d18987daad22
+
+	column 'Chave da matrícula'
+		dataType: string
+		isHidden
+		lineageTag: d4a8ddc1-9bec-5b6c-8656-14a9ae355599
+		summarizeBy: none
+		sourceColumn: chave_matricula
+
+		annotation SummarizationSetBy = Automatic
+
+	column Risco
+		dataType: double
+		formatString: 0%
+		lineageTag: 781f1bd3-83d5-5e98-a354-a75837fc6ab1
+		summarizeBy: none
+		sourceColumn: risco
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Origem da nota'
+		dataType: string
+		lineageTag: 55364b0a-97f4-52f7-9113-1b26f5d42254
+		summarizeBy: none
+		sourceColumn: origem_da_nota
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cliques até o dia 28'
+		dataType: int64
+		formatString: #,0
+		lineageTag: d7a4c24d-822c-5454-8aa2-1964c493f79b
+		summarizeBy: none
+		sourceColumn: cliques_ate_dia_28
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dias com acesso até o dia 28'
+		dataType: int64
+		formatString: 0
+		lineageTag: a08c00b3-b8e2-5212-9922-75217a673564
+		summarizeBy: none
+		sourceColumn: dias_com_acesso_ate_dia_28
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dias sem acessar no dia 28'
+		dataType: double
+		formatString: 0
+		lineageTag: f77b8fb2-58b5-5589-8769-dac8ced3bf9f
+		summarizeBy: none
+		sourceColumn: dias_sem_acessar_no_dia_28
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parcela entregue até o dia 28'
+		dataType: double
+		formatString: 0%
+		lineageTag: bddc5bcb-5fe2-5ea4-ad6d-df32239a319e
+		summarizeBy: none
+		sourceColumn: parcela_entregue_ate_dia_28
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nota média até o dia 28'
+		dataType: double
+		formatString: 0.0
+		lineageTag: 554da571-31d5-5416-91ad-aa15259b9576
+		summarizeBy: none
+		sourceColumn: nota_media_ate_dia_28
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Faixa de risco'
+		dataType: string
+		lineageTag: 7bcf0ad2-0475-5b9d-b1e7-196ed250c698
+		summarizeBy: none
+		sourceColumn: faixa_de_risco
+		sortByColumn: 'Ordem da faixa'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordem da faixa'
+		dataType: int64
+		isHidden
+		lineageTag: 354c0b2e-d9ac-5145-9ad6-05174d7d29e9
+		summarizeBy: none
+		sourceColumn: ordem_faixa
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fRisco = m
+		mode: import
+		source =
+				let
+				    Arquivo = Parquet.Document(File.Contents(PastaDados & "\fRisco.parquet")),
+				    Tipos = Table.TransformColumnTypes(Arquivo, {
+				        {"chave_matricula", type text},
+				        {"risco", type number},
+				        {"origem_da_nota", type text},
+				        {"cliques_ate_dia_28", Int64.Type},
+				        {"dias_com_acesso_ate_dia_28", Int64.Type},
+				        {"dias_sem_acessar_no_dia_28", type number},
+				        {"parcela_entregue_ate_dia_28", type number},
+				        {"nota_media_ate_dia_28", type number},
+				        {"faixa_de_risco", type text},
+				        {"ordem_faixa", Int64.Type}
+				    })
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "AntesDaNotaVermelha"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "98ee7c73-fd77-551e-b2a2-8c1112cbef44"
+  }
+}

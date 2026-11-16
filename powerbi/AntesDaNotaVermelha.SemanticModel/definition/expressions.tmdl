@@ -1,0 +1,5 @@
+/// Pasta onde estão os arquivos Parquet da camada de modelo (dados\3_modelo).
+expression PastaDados = "C:\antes-da-nota-vermelha\dados\3_modelo" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: d43485f0-0fc0-515f-a5c2-c2293735b436
+
+	annotation PBI_ResultType = Text

@@ -1,0 +1,35 @@
+/// Limiares de risco para simular o tamanho da lista do tutor.
+table pLimiar
+	lineageTag: 31e6d8c9-519c-540f-b57c-812c779633ac
+
+	column Limiar
+		dataType: double
+		formatString: 0%
+		lineageTag: 5f68e608-c7ec-5fa9-8ec4-256a6f01e967
+		summarizeBy: none
+		sourceColumn: limiar
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome do limiar'
+		dataType: string
+		lineageTag: 17d4b6e5-f75b-5e2f-a870-d900d225c8a1
+		summarizeBy: none
+		sourceColumn: nome_do_limiar
+		sortByColumn: Limiar
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pLimiar = m
+		mode: import
+		source =
+				let
+				    Arquivo = Parquet.Document(File.Contents(PastaDados & "\pLimiar.parquet")),
+				    Tipos = Table.TransformColumnTypes(Arquivo, {
+				        {"limiar", type number},
+				        {"nome_do_limiar", type text}
+				    })
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,63 @@
+/// O que foi corrigido nos dados de origem e quantos registros cada correção afetou.
+table engTratamentos
+	lineageTag: f75e8690-9c83-502f-90f3-a195716275e7
+
+	column Ordem
+		dataType: int64
+		formatString: 0
+		lineageTag: 53e0a16f-76f6-575e-8afb-029dccf6279a
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tratamento
+		dataType: string
+		lineageTag: b035119f-dd90-5361-a43c-3e1d8ea34f70
+		summarizeBy: none
+		sourceColumn: tratamento
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column Onde
+		dataType: string
+		lineageTag: 46032dcb-b8d4-5016-88ef-c7697dd1be42
+		summarizeBy: none
+		sourceColumn: onde
+
+		annotation SummarizationSetBy = Automatic
+
+	column Registros
+		dataType: int64
+		formatString: #,0
+		lineageTag: 7c9fc6d9-1c55-5d35-8024-5b3adbd83646
+		summarizeBy: sum
+		sourceColumn: registros
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Decisão'
+		dataType: string
+		lineageTag: 57058fe5-83e3-5739-86a8-84fe8464db8f
+		summarizeBy: none
+		sourceColumn: decisao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition engTratamentos = m
+		mode: import
+		source =
+				let
+				    Arquivo = Parquet.Document(File.Contents(PastaDados & "\engTratamentos.parquet")),
+				    Tipos = Table.TransformColumnTypes(Arquivo, {
+				        {"ordem", Int64.Type},
+				        {"tratamento", type text},
+				        {"onde", type text},
+				        {"registros", Int64.Type},
+				        {"decisao", type text}
+				    })
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table
